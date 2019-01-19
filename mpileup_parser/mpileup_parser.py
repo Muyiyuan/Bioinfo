@@ -56,9 +56,9 @@ def mpileup_parser(sample, out_dir):
         chrom = line.strip().split('\t')[0]
         pos = line.strip().split('\t')[1]
         ref = line.strip().split('\t')[2].upper()
-        depth = line.strip().split('\t')[3]
+        depth = int(line.strip().split('\t')[3])
         base = line.strip().split('\t')[4].upper()
-        if ref in ['A', 'T', 'C', 'G']:            
+        if ref in ['A', 'T', 'C', 'G'] and depth > 0:            
             indel_temp = re.findall(r'[-\+]\d+\w+', base)
             indel_list = []
             for indel in indel_temp:
