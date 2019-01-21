@@ -21,9 +21,17 @@ optional arguments:
 root_dir = /datapool/Analysis/ResDev/RD03_Pan70/NA12878_Error_Set
 sub_dir = 04.DEDUP
 bam_suffix = dedup.bam
-sample_file = /datapool/users_root/yangyuan/Bioinfo/Error_Set/Pan70.NA12878.Sample.txt
+sample_file = 
 ref_genome = /datapool/RefData/Genome/hg19/ucsc.hg19.fa
 samtools = /datapool/Apps/Production/miniconda2/bin/samtools
 bed_file = /datapool/RefData/Research/panel/RD03_Pan70/Sim_V7_3_primary_targets_expand20.bed
 out_dir = /datapool/Analysis/ResDev/RD03_Pan70/NA12878_Error_Set/mpileup_parser
+```
+2. Sample file
+```shell
+RD2019012101CF
+RD2019012102CF
+...
+RD2019012119CF
+RD2019012120CF
 ```
