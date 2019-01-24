@@ -9,27 +9,13 @@ from multiprocessing import Process
 
 
 def read_config_file(config_file):
+    config_dict = {}
     with open(config_file, 'r') as f:
         lines = f.readlines()
         for line in lines:
             line = line.strip()
-            if re.match(r'^root_dir.*', line):
-                root_dir = line.split(' = ')[1]
-            if re.match(r'^sub_dir.*', line):
-                sub_dir = line.split(' = ')[1]
-            if re.match(r'^bam_suffix.*', line):
-                bam_suffix = line.split(' = ')[1]
-            if re.match(r'^sample_file.*', line):
-                sample_file = line.split(' = ')[1]
-            if re.match(r'^ref_genome.*', line):
-                ref_genome = line.split(' = ')[1]
-            if re.match(r'^samtools.*', line):
-                samtools = line.split(' = ')[1]
-            if re.match(r'^bed_file.*', line):
-                bed_file = line.split(' = ')[1]
-            if re.match(r'^out_dir.*', line):
-                out_dir = line.split(' = ')[1]
-    return root_dir, sub_dir, bam_suffix, sample_file, ref_genome, samtools, bed_file, out_dir
+            config_dict[line.split(' = ')[0]] = line.split(' = ')[1] 
+    return config_dict
 
 def get_sample_list(sample_file):
     sample_list = []
@@ -142,7 +128,15 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     config_file = args.config
-    root_dir, sub_dir, bam_suffix, sample_file, ref_genome, samtools, bed_file, out_dir = read_config_file(config_file)
+    config_dict = read_config_file(config_file)
+    root_dir = config_dict['root_dir']
+    sub_dir = config_dict['sub_dir']
+    bam_suffix = config_dict['bam_suffix']
+    sample_file = config_dict['sample_file']
+    ref_genome = config_dict['ref_genome']
+    samtools = config_dict['samtools']
+    bed_file = config_dict['bed_file']
+    out_dir = config_dict['out_dir']
     sample_list = get_sample_list(sample_file)
     make_result_dir(out_dir)
     procs = []
