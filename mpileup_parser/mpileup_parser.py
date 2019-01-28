@@ -98,16 +98,16 @@ def mpileup_parser(sample, out_dir):
                     if re.match(r'\+\d+(\w+)', var):
                         new_alt = ref + re.match(r'[-\+]\d+(\w+)', var).group(1)
                         r.write('{}\t{}\t{}\t{}\t{}\t{}\t{}\n'.format(chrom, pos, ref, new_alt, depth, vd, af))
-                        if af < 0.15 and af > 0:
+                        if af < 0.15:
                             e.write('{}\t{}\t{}\t{}\t{}\t{}\t{}\n'.format(chrom, pos, ref, new_alt, depth, vd, af))
                     elif re.match(r'-\d+(\w+)', var):
                         new_ref = ref + re.match(r'[-\+]\d+(\w+)', var).group(1)
                         r.write('{}\t{}\t{}\t{}\t{}\t{}\t{}\n'.format(chrom, pos, new_ref, ref, depth, vd, af))
-                        if af < 0.15 and af > 0:
+                        if af < 0.15:
                             e.write('{}\t{}\t{}\t{}\t{}\t{}\t{}\n'.format(chrom, pos, new_ref, ref, depth, vd, af))
                     else:
                         r.write('{}\t{}\t{}\t{}\t{}\t{}\t{}\n'.format(chrom, pos, ref, var, depth, vd, af))
-                        if af < 0.15 and af > 0 and var != 'DEL':
+                        if af < 0.15 and var != 'DEL':
                             e.write('{}\t{}\t{}\t{}\t{}\t{}\t{}\n'.format(chrom, pos, ref, var, depth, vd, af))
             if count_depth != int(depth):
                 print('{}:{}:{}:{}:{}:{}'.format(sample, chrom, pos, depth, count_depth, read))
