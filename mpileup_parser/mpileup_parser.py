@@ -118,7 +118,7 @@ def mpileup_parser(sample, out_dir):
 def get_error_file(root_dir, sub_dir, bam_suffix, sample, ref_genome, samtools, bed_file, out_dir):
     os.chdir('{}/{}/{}'.format(root_dir, sample, sub_dir))
     bam_file = '{}.{}'.format(sample, bam_suffix)
-    os.system('{} mpileup -d 1000000 -A -B -q 1 -Q 1 -l {} -f {} {} > {}/{}.mpileup.txt'.format(samtools, bed_file, ref_genome, bam_file, out_dir, sample))
+    os.system('{} mpileup -d 1000000 -A -B -q 0 -Q 0 -x -l {} -f {} {} > {}/{}.mpileup.txt'.format(samtools, bed_file, ref_genome, bam_file, out_dir, sample))
     mpileup_parser(sample, out_dir)
 
 
