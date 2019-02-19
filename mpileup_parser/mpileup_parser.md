@@ -2,7 +2,7 @@
 
 <p>Samtools mpileup and parser</p>
 
-#### Usgae
+#### Usage
 
 ```shell
 usage: mpileup_parser.py [-h] [-c CONFIG]
