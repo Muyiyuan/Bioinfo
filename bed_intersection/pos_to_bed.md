@@ -2,7 +2,7 @@
 
 <p>Generate bed file based on pos file</p>
 
-#### Usgae
+#### Usage
 
 ```shell
 usage: pos_to_bed.py [-h] -p POS -b BED [-e {True,False}]
