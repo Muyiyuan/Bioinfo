@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <script src="./echarts.js"></script>
+    <script src="./dataTool.js"></script>
+    <script src="./data.js"></script>
+</head>
+<body style="height: 100%; margin: 0">
+    <h1 align="center">Baseline Report</h1>
+    <h3>1. Bin VD</h3>
+    <div id="container1" style="height: 600px"></div>
+    <script type="text/javascript">
+        var dom = document.getElementById("container1");
+        var myChart = echarts.init(dom);
+        var app = {};
+        option = null;    
+        var option = {
+            tooltip: {
+                trigger: "axis"
+            },
+            legend: {
+                data: ["Raw", "Dedup"]
+            },
+            xAxis: {
+                type: "category", 
+                name: "Bin", 
+                data: bin_err_xaxis
+            },
+            yAxis: {
+                type: "value",
+                name: "VD"
+            },
+            dataZoom: [
+                {
+                    type: "slider", 
+                    xAxisIndex: 0,
+                    start: 0,
+                    end: 100
+                }, 
+                {
+                    type: "inside",
+                    xAxisIndex: 0,
+                    start: 0,
+                    end: 100
+                },
+                {
+                    type: "slider", 
+                    yAxisIndex: 0,
+                    start: 0,
+                    end: 100
+                },
+                {
+                    type: "inside",
+                    yAxisIndex: 0,
+                    start: 0,
+                    end: 100
+                }
+            ],
+            series: [
+                {
+                    name: "Raw",
+                    data: raw_bin_yaxis, 
+                    type: "line"
+                },
+                {
+                    name: "Dedup",
+                    data: dedup_bin_yaxis,
+                    type: "line"
+                }
+            ]
+        };
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+    <h3>2. Error Distribution</h3>
+    <div id="container2" style="height: 600px"></div>
+    <script type="text/javascript">
+        var dom = document.getElementById("container2");
+        var myChart = echarts.init(dom);
+        var app = {};
+        option = null;
+        var option = {
+            tooltip: {
+                trigger: "axis"
+            },
+            legend: {
+                data: ["Raw", "Dedup"]
+            },
+            xAxis: {
+                type: "category",
+                name: "Sample",
+                data: err_dis_xaxis
+            },
+            yAxis: {
+                type: "value",
+                name: "Count"
+            },
+            dataZoom: [
+                {
+                    type: "slider", 
+                    xAxisIndex: 0,
+                    start: 0,
+                    end: 100
+                }, 
+                {
+                    type: "inside",
+                    xAxisIndex: 0,
+                    start: 0,
+                    end: 100
+                },
+                {
+                    type: "slider", 
+                    yAxisIndex: 0,
+                    start: 0,
+                    end: 100
+                },
+                {
+                    type: "inside",
+                    yAxisIndex: 0,
+                    start: 0,
+                    end: 100
+                }
+            ],
+            series: [
+                {
+                    name: "Raw",
+                    data: raw_err_yaxis, 
+                    type: "bar"
+                },
+                {
+                    name: "Dedup",
+                    data: dedup_err_yaxis,
+                    type: "bar"
+                }
+            ]
+        };
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+    <h3>3. Hotspot AF</h3>
+    <div id="container3" style="height: 600px"></div>
+    <script type="text/javascript">
+        var dom = document.getElementById("container3");
+        var myChart = echarts.init(dom);
+        var app = {};
+        option = null;
+        var rawdata = echarts.dataTool.prepareBoxplotData(raw_hot_yaxis);
+        var dedupdata = echarts.dataTool.prepareBoxplotData(dedup_hot_yaxis);
+        var option = {
+            tooltip: {
+                trigger: "axis"
+            },
+            legend: {
+                data: ["Raw", "Dedup"]
+            },
+            grid: {
+                left: "10%",
+                right: "10%",
+                bottom: "15%"
+            },
+            xAxis: {
+                type: "category",
+                name: "Variant",
+                data: hot_af_xaxis
+            },
+            yAxis: {
+                type: "value",
+                name: "AF"
+            },
+            dataZoom: [
+                {
+                    type: "slider", 
+                    xAxisIndex: 0,
+                    start: 0,
+                    end: 100
+                }, 
+                {
+                    type: "inside",
+                    xAxisIndex: 0,
+                    start: 0,
+                    end: 100
+                },
+                {
+                    type: "slider", 
+                    yAxisIndex: 0,
+                    start: 0,
+                    end: 100
+                },
+                {
+                    type: "inside",
+                    yAxisIndex: 0,
+                    start: 0,
+                    end: 100
+                }
+            ],
+            series: [
+                {
+                    name: "Raw",
+                    type: "boxplot",
+                    data: rawdata.boxData
+                },
+                {
+                    name: "Raw",
+                    type: "scatter",
+                    data: rawdata.outliers
+                },
+                {
+                    name: "Dedup",
+                    type: "boxplot",
+                    data: dedupdata.boxData
+                },
+                {
+                    name: "Dedup",
+                    type: "scatter",
+                    data: dedupdata.outliers
+                }
+            ]
+        };
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+    <h3>4. Raw Error Type</h3>
+    <div id="container4" style="height: 300px"></div>
+    <script type="text/javascript">
+        var dom = document.getElementById("container4");
+        var myChart = echarts.init(dom);
+        var app = {};
+        option = null;
+        var data = raw_type_data;
+        data = data.map(function (item) {
+            return [item[1], item[0], item[2] || "-"];
+        });
+        var option = {
+            tooltip: {
+                position: "top"
+            },
+            animation: false,
+            grid: {
+                height: "50%",
+                y: "10%"
+            },
+            xAxis: {
+                type: "category",
+                data: type_list
+            },
+            yAxis: {
+                type: "category",
+                data: ["Count"]
+            },
+            visualMap: {
+                min: raw_min,
+                max: raw_max,
+                calculable: true,
+                orient: "horizontal",
+                left: "center",
+                bottom: "15%"
+            },
+            series: [{
+                name: "Error type",
+                type: "heatmap",
+                data: data,
+                label: {
+                    normal: {
+                        show: true
+                    }
+                },
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowColor: "rgba(0, 0, 0, 0.5)"
+                    }
+                }
+            }]
+        };
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+    <h3>5. Dedup Error Type</h3>
+    <div id="container5" style="height: 300px"></div>
+    <script type="text/javascript">
+        var dom = document.getElementById("container5");
+        var myChart = echarts.init(dom);
+        var app = {};
+        option = null;
+        var data = dedup_type_data;
+        data = data.map(function (item) {
+            return [item[1], item[0], item[2] || "-"];
+        });
+        var option = {
+            tooltip: {
+                position: "top"
+            },
+            animation: false,
+            grid: {
+                height: "50%",
+                y: "10%"
+            },
+            xAxis: {
+                type: "category",
+                data: type_list
+            },
+            yAxis: {
+                type: "category",
+                data: ["Count"]
+            },
+            visualMap: {
+                min: dedup_min,
+                max: dedup_max,
+                calculable: true,
+                orient: "horizontal",
+                left: "center",
+                bottom: "15%"
+            },
+            series: [{
+                name: "Error type",
+                type: "heatmap",
+                data: data,
+                label: {
+                    normal: {
+                        show: true
+                    }
+                },
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowColor: "rgba(0, 0, 0, 0.5)"
+                    }
+                }
+            }]
+        };
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+</body>
