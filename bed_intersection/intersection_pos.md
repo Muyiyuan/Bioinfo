@@ -2,7 +2,7 @@
 
 <p>Generate intersection position based on two bed file</p>
 
-#### Usgae
+#### Usage
 
 ```shell
 usage: bed_intersection.py [-h] [-b1 BED1] [-b2 BED2] [-o OUT]
